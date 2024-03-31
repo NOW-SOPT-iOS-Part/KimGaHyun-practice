@@ -22,7 +22,7 @@ final class LoginViewController: UIViewController {
     
     private let idTextField: UITextField = {
         let textField = UITextField(frame: CGRect(x: 20, y: 276, width: 335, height: 52))
-        textField.placeholder = "아이디를 입력해주세요"
+        textField.placeholder = "아이디"
         textField.font = UIFont(name: "Pretendard-SemiBold", size: 14)
         textField.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
         return textField
@@ -30,7 +30,7 @@ final class LoginViewController: UIViewController {
     
     private let passwordTextField: UITextField = {
         let textField = UITextField(frame: CGRect(x: 20, y: 335, width: 335, height: 52))
-        textField.placeholder = "비밀번호를 입력해주세요"
+        textField.placeholder = "비밀번호"
         textField.font = UIFont(name: "Pretendard-SemiBold", size: 14)
         textField.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
         return textField
@@ -49,21 +49,21 @@ final class LoginViewController: UIViewController {
     private func presentToWelcomeVC() {
         let welcomeViewController = WelcomeViewController()
         welcomeViewController.modalPresentationStyle = .formSheet
-//        welcomeViewController.id = idTextField.text
+        welcomeViewController.id = idTextField.text
         welcomeViewController.setLabelText(id: idTextField.text)
         self.present(welcomeViewController, animated: true)
     }
     
     private func pushToWelcomeVC() {
         let welcomeViewController = WelcomeViewController()
-//        welcomeViewController.id = idTextField.text
+        welcomeViewController.id = idTextField.text
         welcomeViewController.setLabelText(id: idTextField.text)
         self.navigationController?.pushViewController(welcomeViewController, animated: true)
     }
     
     @objc
     private func loginButtonDidTap() {
-//        presentToWelcomeVC()
+        // presentToWelcomeVC()
         pushToWelcomeVC()
     }
     
