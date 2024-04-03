@@ -5,7 +5,6 @@
 //  Created by Gahyun Kim on 2024/03/29.
 //
 
-import Foundation
 import UIKit
 
 final class LoginViewController: UIViewController {
@@ -25,6 +24,8 @@ final class LoginViewController: UIViewController {
         textField.placeholder = "아이디"
         textField.font = UIFont(name: "Pretendard-SemiBold", size: 14)
         textField.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
+        textField.layer.cornerRadius = 3
+        textField.addPadding(left: 23)
         return textField
     }()
     
@@ -33,6 +34,8 @@ final class LoginViewController: UIViewController {
         textField.placeholder = "비밀번호"
         textField.font = UIFont(name: "Pretendard-SemiBold", size: 14)
         textField.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
+        textField.layer.cornerRadius = 3
+        textField.addPadding(left: 23)
         return textField
     }()
     
@@ -43,6 +46,7 @@ final class LoginViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
         button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
+        button.layer.cornerRadius = 6
         return button
     }()
     
