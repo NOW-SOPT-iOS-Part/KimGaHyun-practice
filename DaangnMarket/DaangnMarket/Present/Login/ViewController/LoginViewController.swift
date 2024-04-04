@@ -79,7 +79,9 @@ private extension LoginViewController {
     }
     
     func setHierarchy() {
-        view.addSubviews(titleLabel, idTextField, passwordTextField, loginButton)
+        [titleLabel, idTextField, passwordTextField, loginButton].forEach {
+            self.view.addSubview($0)
+        }
     }
     
     //TODO: - SnapKit 적용

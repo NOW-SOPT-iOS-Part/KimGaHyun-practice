@@ -86,7 +86,9 @@ private extension WelcomeViewController {
     }
     
     func setHierarchy() {
-        view.addSubviews(logoImageView, welcomeLabel, goHomeButton, backToLoginButton)
+        [logoImageView, welcomeLabel, goHomeButton, backToLoginButton].forEach {
+            self.view.addSubview($0)
+        }
     }
     
     //TODO: - SnapKit 적용
