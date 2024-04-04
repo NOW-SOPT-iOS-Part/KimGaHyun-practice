@@ -36,6 +36,11 @@ final class WelcomeViewController: UIViewController {
     
     @objc
     private func backToLoginButtonDidTap() {
+        if let loginViewController = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) as? LoginViewController {
+            loginViewController.resetTextField()
+        }
+        
+        
         if self.navigationController == nil {
             self.dismiss(animated: true)
         } else {

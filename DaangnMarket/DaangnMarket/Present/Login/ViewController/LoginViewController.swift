@@ -14,8 +14,8 @@ final class LoginViewController: UIViewController {
     //MARK: - UI Components
     
     private let titleLabel = UILabel()
-    private let idTextField = UITextField()
-    private let passwordTextField = UITextField()
+    private var idTextField = UITextField()
+    private var passwordTextField = UITextField()
     private lazy var loginButton = UIButton()
     
     //MARK: - Life Cycle
@@ -55,6 +55,7 @@ private extension LoginViewController {
         
         passwordTextField.do {
             $0.placeholder = "비밀번호"
+            $0.isSecureTextEntry = true
         }
         
         [idTextField, passwordTextField].forEach() {
@@ -62,6 +63,7 @@ private extension LoginViewController {
                 $0.font = .pretendardSemiBold(size: 14)
                 $0.backgroundColor = .daangngrey200
                 $0.layer.cornerRadius = 3
+                $0.clearButtonMode = .whileEditing
                 $0.addPadding(left: 23)
             }
         }
@@ -107,3 +109,9 @@ private extension LoginViewController {
     
 }
 
+extension LoginViewController {
+    func resetTextField() {
+        idTextField.text = ""
+        passwordTextField.text = ""
+    }
+}
