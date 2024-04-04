@@ -5,8 +5,9 @@
 //  Created by Gahyun Kim on 2024/03/30.
 //
 
-import Foundation
 import UIKit
+
+import Then
 
 final class WelcomeViewController: UIViewController {
     
@@ -16,68 +17,21 @@ final class WelcomeViewController: UIViewController {
     
     //MARK: - UI Components 
     
-    private let logoImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 112, y: 87, width: 150, height: 150))
-        imageView.image = UIImage(named: "img_character")
-        return imageView
-    }()
+    private let logoImageView = UIImageView()
+    private let welcomeLabel = UILabel()
+    private let goHomeButton = UIButton()
+    private let backToLoginButton = UIButton()
     
-    private let welcomeLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 140, y: 295, width: 95, height: 60))
-        label.text = "???님 \n반가워요!"
-        label.font = UIFont(name: "Pretendard-ExtraBold", size: 25)
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    private var goHomeButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 20, y: 426, width: 335, height: 58))
-        button.backgroundColor = UIColor(red: 255/255, green: 111/255, blue: 15/255, alpha: 1)
-        button.setTitle("메인으로", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
-        return button
-    }()
-    
-    private lazy var backToLoginButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 20, y: 498, width: 335, height: 58))
-        button.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
-        button.setTitle("다시 로그인", for: .normal)
-        button.setTitleColor(UIColor(red: 172/255, green: 176/255, blue: 185/255, alpha: 1), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
-        button.addTarget(self, action: #selector(backToLoginButtonDidTap), for: .touchUpInside)
-        return button
-    }()
-    
-    private func bindID() {
-        // guard let idText = id else { return }
-        // self.welcomeLabel.text = "\(idText)님 \n반가워요!"
-        if let idText = id {
-            self.welcomeLabel.text = "\(idText)님 \n반가워요!"
-        } else {
-            print("id가 없습니다. ")
-        }
-
-    }
-    
-    func setLabelText(id: String?) {
-        self.id = id
-    }
+    //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
+        setStyle()
+        setHierarchy()
         setLayout()
-        
+
         bindID()
-    }
-    
-    private func setLayout() {
-        [logoImageView, welcomeLabel, goHomeButton, backToLoginButton].forEach {
-            self.view.addSubview($0)
-        }
     }
     
     @objc
@@ -87,5 +41,74 @@ final class WelcomeViewController: UIViewController {
         } else {
             self.navigationController?.popViewController(animated: true)
         }
+    }
+}
+
+//MARK: - private Extension
+
+private extension WelcomeViewController {
+    func setStyle() {
+        self.view.backgroundColor = .white
+        
+        logoImageView.do {
+            $0.image = UIImage(named: "img_character")
+        }
+        
+        welcomeLabel.do {
+            $0.text = "???님 \n반가워요!"
+            $0.font = .pretendardExtraBold(size: 25)
+            $0.textAlignment = .center
+            $0.numberOfLines = 2
+        }
+        
+        goHomeButton.do {
+            $0.backgroundColor = .daangnprimary
+            $0.setTitle("메인으로", for: .normal)
+            $0.setTitleColor(.daangnwhite, for: .normal)
+            $0.titleLabel?.font = .pretendardBold(size: 18)
+            $0.addTarget(self, action: #selector(backToLoginButtonDidTap), for: .touchUpInside)
+            $0.layer.cornerRadius = 6
+        }
+        
+        backToLoginButton.do {
+            $0.backgroundColor = .daangngrey200
+            $0.setTitle("다시 로그인", for: .normal)
+            $0.setTitleColor(.daangngrey300, for: .normal)
+            $0.titleLabel?.font = .pretendardBold(size: 18)
+            $0.addTarget(self, action: #selector(backToLoginButtonDidTap), for: .touchUpInside)
+            $0.layer.cornerRadius = 6
+        }
+    }
+    
+    func setHierarchy() {
+        [logoImageView, welcomeLabel, goHomeButton, backToLoginButton].forEach {
+            self.view.addSubview($0)
+        }
+    }
+    
+    //TODO: - SnapKit 적용
+    func setLayout() {
+        logoImageView.frame = CGRect(x: 127, y: 87, width: 150, height: 150)
+        welcomeLabel.frame = CGRect(x: 145, y: 295, width: 95, height: 60)
+        goHomeButton.frame = CGRect(x: 28, y: 426, width: 335, height: 58)
+        backToLoginButton.frame = CGRect(x: 28, y: 498, width: 335, height: 58)
+    }
+    
+    func bindID() {
+        // guard let idText = id else { return }
+        // self.welcomeLabel.text = "\(idText)님 \n반가워요!"
+        if let idText = id {
+            self.welcomeLabel.text = "\(idText)님 \n반가워요!"
+        } else {
+            print("id가 없습니다. ")
+        }
+    }
+}
+
+//MARK: - Extension
+
+extension WelcomeViewController {
+    func setLabelText(id: String?) {
+        self.id = id
     }
 }

@@ -7,62 +7,25 @@
 
 import UIKit
 
+import Then
+
 final class LoginViewController: UIViewController {
     
-    private let titleLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: 69, y: 161, width: 236, height: 44))
-        label.text = "동네라서 가능한 모든것\n당근에서 가까운 이웃과 함께해요."
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        label.font = UIFont(name: "Pretendard-Bold", size: 18)
-        return label
-    }()
+    //MARK: - UI Components
     
-    private let idTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 20, y: 276, width: 335, height: 52))
-        textField.placeholder = "아이디"
-        textField.font = UIFont(name: "Pretendard-SemiBold", size: 14)
-        textField.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
-        textField.layer.cornerRadius = 3
-        textField.addPadding(left: 23)
-        return textField
-    }()
+    private let titleLabel = UILabel()
+    private let idTextField = UITextField()
+    private let passwordTextField = UITextField()
+    private lazy var loginButton = UIButton()
     
-    private let passwordTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 20, y: 335, width: 335, height: 52))
-        textField.placeholder = "비밀번호"
-        textField.font = UIFont(name: "Pretendard-SemiBold", size: 14)
-        textField.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
-        textField.layer.cornerRadius = 3
-        textField.addPadding(left: 23)
-        return textField
-    }()
+    //MARK: - Life Cycle
     
-    private lazy var loginButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 21, y: 422, width: 332, height: 58))
-        button.backgroundColor = UIColor(red: 255/255, green: 111/255, blue: 15/255, alpha: 1)
-        button.setTitle("로그인하기", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
-        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
-        button.layer.cornerRadius = 6
-        return button
-    }()
-    
-    private func presentToWelcomeVC() {
-        let welcomeViewController = WelcomeViewController()
-        welcomeViewController.modalPresentationStyle = .formSheet
-        welcomeViewController.id = idTextField.text
-        welcomeViewController.setLabelText(id: idTextField.text)
-        self.present(welcomeViewController, animated: true)
-    }
-    
-    private func pushToWelcomeVC() {
-        let welcomeViewController = WelcomeViewController()
-        welcomeViewController.id = idTextField.text
-        welcomeViewController.setLabelText(id: idTextField.text)
-        self.navigationController?.pushViewController(welcomeViewController, animated: true)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setStyle()
+        setHierarchy()
+        setLayout()
     }
     
     @objc
@@ -70,18 +33,77 @@ final class LoginViewController: UIViewController {
         // presentToWelcomeVC()
         pushToWelcomeVC()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+}
+
+//MARK: - private Extension
+
+private extension LoginViewController {
+    func setStyle() {
         self.view.backgroundColor = .white
-        setLayout()
+        
+        titleLabel.do {
+            $0.text = "동네라서 가능한 모든것\n당근에서 가까운 이웃과 함께해요."
+            $0.textColor = .daangnblack
+            $0.textAlignment = .center
+            $0.numberOfLines = 2
+            $0.font = .pretendardBold(size: 18)
+        }
+        
+        idTextField.do {
+            $0.placeholder = "아이디"
+        }
+        
+        passwordTextField.do {
+            $0.placeholder = "비밀번호"
+        }
+        
+        [idTextField, passwordTextField].forEach() {
+            $0.do {
+                $0.font = .pretendardSemiBold(size: 14)
+                $0.backgroundColor = .daangngrey200
+                $0.layer.cornerRadius = 3
+                $0.addPadding(left: 23)
+            }
+        }
+        
+        loginButton.do {
+            $0.backgroundColor = .daangnprimary
+            $0.setTitle("로그인하기", for: .normal)
+            $0.setTitleColor(.daangnwhite, for: .normal)
+            $0.titleLabel?.font = .pretendardBold(size: 18)
+            $0.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
+            $0.layer.cornerRadius = 6
+        }
     }
     
-    private func setLayout() {
+    func setHierarchy() {
         [titleLabel, idTextField, passwordTextField, loginButton].forEach {
             self.view.addSubview($0)
         }
     }
+    
+    //TODO: - SnapKit 적용
+    func setLayout() {
+        titleLabel.frame = CGRect(x: 78, y: 161, width: 236, height: 44)
+        idTextField.frame = CGRect(x: 28, y: 276, width: 335, height: 52)
+        passwordTextField.frame = CGRect(x: 28, y: 335, width: 335, height: 52)
+        loginButton.frame = CGRect(x: 30, y: 422, width: 332, height: 58)
+    }
+    
+    func presentToWelcomeVC() {
+        let welcomeViewController = WelcomeViewController()
+        welcomeViewController.modalPresentationStyle = .formSheet
+        welcomeViewController.id = idTextField.text
+        welcomeViewController.setLabelText(id: idTextField.text)
+        self.present(welcomeViewController, animated: true)
+    }
+    
+    func pushToWelcomeVC() {
+        let welcomeViewController = WelcomeViewController()
+        welcomeViewController.id = idTextField.text
+        welcomeViewController.setLabelText(id: idTextField.text)
+        self.navigationController?.pushViewController(welcomeViewController, animated: true)
+    }
+    
 }
 
