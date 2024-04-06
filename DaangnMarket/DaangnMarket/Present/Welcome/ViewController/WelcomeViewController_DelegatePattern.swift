@@ -18,8 +18,11 @@ final class WelcomeViewController_DelegatePattern: UIViewController {
     
     //MARK: - Properties
     
-    var id: String?
     weak var delegate: DataBindProtocol?
+    var id: String?
+
+    typealias handler = ((String) -> (Void))
+    var completionHandler: handler?
     
     //MARK: - UI Components
     
@@ -42,13 +45,13 @@ final class WelcomeViewController_DelegatePattern: UIViewController {
     
     @objc
     private func backToLoginButtonDidTap() {
-        if let loginViewController = navigationController?.viewControllers.first(where: { $0 is LoginViewController }) as? LoginViewController {
+        if let loginViewController = navigationController?.viewControllers.first(where: { $0 is LoginViewController_DelegatePattern }) as? LoginViewController_DelegatePattern {
             loginViewController.resetTextField()
         }
         
-        if let id = id {
-            delegate?.dataBind(id: id)
-        }
+        guard let id else { return }
+        completionHandler?(id)
+        
         self.navigationController?.popViewController(animated: true)
         
         if self.navigationController == nil {

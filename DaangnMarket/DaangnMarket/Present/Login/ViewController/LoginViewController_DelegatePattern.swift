@@ -94,7 +94,7 @@ private extension LoginViewController_DelegatePattern {
     }
     
     func presentToWelcomeVC() {
-        let welcomeViewController = WelcomeViewController()
+        let welcomeViewController = WelcomeViewController_DelegatePattern()
         welcomeViewController.modalPresentationStyle = .formSheet
         welcomeViewController.id = idTextField.text
         welcomeViewController.setLabelText(id: idTextField.text)
@@ -102,9 +102,11 @@ private extension LoginViewController_DelegatePattern {
     }
     
     func pushToWelcomeVC() {
-        let welcomeViewController = WelcomeViewController()
-        welcomeViewController.id = idTextField.text
-        welcomeViewController.setLabelText(id: idTextField.text)
+        let welcomeViewController = WelcomeViewController_DelegatePattern()
+        welcomeViewController.completionHandler = { [weak self] id in
+            guard let self else { return }
+            self.idTextField.text = "\(id)에서 어떤걸로 할꺼얌?"
+        }
         self.navigationController?.pushViewController(welcomeViewController, animated: true)
     }
     
