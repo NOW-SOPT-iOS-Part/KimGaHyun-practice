@@ -91,18 +91,36 @@ private extension WelcomeViewController {
             self.view.addSubview($0)
         }
     }
-    
-    //TODO: - SnapKit 적용
+   
     func setLayout() {
-        logoImageView.frame = CGRect(x: 127, y: 87, width: 150, height: 150)
-        welcomeLabel.frame = CGRect(x: 145, y: 295, width: 95, height: 60)
-        goHomeButton.frame = CGRect(x: 28, y: 426, width: 335, height: 58)
-        backToLoginButton.frame = CGRect(x: 28, y: 498, width: 335, height: 58)
+        logoImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(87)
+            $0.width.height.equalTo(150)
+        }
+        
+        welcomeLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(logoImageView.snp.bottom).offset(58)
+            $0.height.equalTo(60)
+        }
+        
+        goHomeButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(welcomeLabel.snp.bottom).offset(71)
+            $0.width.equalTo(335)
+            $0.height.equalTo(58)
+        }
+        
+        backToLoginButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(goHomeButton.snp.bottom).offset(14)
+            $0.width.equalTo(335)
+            $0.height.equalTo(58)
+        }
     }
     
     func bindID() {
-        // guard let idText = id else { return }
-        // self.welcomeLabel.text = "\(idText)님 \n반가워요!"
         if let idText = id {
             self.welcomeLabel.text = "\(idText)님 \n반가워요!"
         } else {

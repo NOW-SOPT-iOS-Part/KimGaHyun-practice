@@ -87,10 +87,31 @@ private extension LoginViewController {
     
     //TODO: - SnapKit 적용
     func setLayout() {
-        titleLabel.frame = CGRect(x: 78, y: 161, width: 236, height: 44)
-        idTextField.frame = CGRect(x: 28, y: 276, width: 335, height: 52)
-        passwordTextField.frame = CGRect(x: 28, y: 335, width: 335, height: 52)
-        loginButton.frame = CGRect(x: 30, y: 422, width: 332, height: 58)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(161)
+            $0.leading.trailing.equalToSuperview().inset(69)
+            $0.height.equalTo(44)
+        }
+        
+        idTextField.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(71)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(52)
+        }
+        
+        passwordTextField.snp.makeConstraints {
+            $0.top.equalTo(idTextField.snp.bottom).offset(7)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(52)
+        }
+        
+        loginButton.snp.makeConstraints {
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(35)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(58)
+        }
+        
+        
     }
     
     func presentToWelcomeVC() {
