@@ -8,6 +8,7 @@
 import UIKit
 
 import Then
+import SnapKit
 
 protocol DataBindProtocol: AnyObject {
     func dataBind(id: String?)
