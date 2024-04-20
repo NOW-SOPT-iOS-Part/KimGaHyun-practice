@@ -33,8 +33,10 @@ final class ChatTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func setStyle() {
+}
+
+private extension ChatTableViewCell {
+    func setStyle() {
         nameLabel.do {
             $0.textColor = .daangnblack
             $0.textAlignment = .center
@@ -50,18 +52,17 @@ final class ChatTableViewCell: UITableViewCell {
         chatLabel.do {
             $0.textColor = .daangnblack
             $0.textAlignment = .left
-            $0.font = .pretendardBold(size: 14)
+            $0.font = .pretendardRegular(size: 14)
         }
     }
     
-    
-    private func setHierarchy() {
+    func setHierarchy() {
         [profileImageView, nameLabel, placeLabel, chatLabel, itemImageView].forEach {
             contentView.addSubview($0)
         }
     }
     
-    private func setLayout() {
+    func setLayout() {
         profileImageView.snp.makeConstraints {
             $0.leading.top.equalToSuperview().offset(16)
             $0.size.equalTo(40)
