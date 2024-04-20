@@ -5,8 +5,10 @@
 //  Created by Gahyun Kim on 2024/03/29.
 //
 
-import Foundation
 import UIKit
+
+import SnapKit
+import Then
 
 final class LoginView: UIView {
     
@@ -14,7 +16,7 @@ final class LoginView: UIView {
     
     // MARK: - UI Components
     
-    var titleLabel = UILabel()
+    private let titleLabel = UILabel()
     var idTextField = UITextField()
     var passwordTextField = UITextField()
     lazy var loginButton = UIButton()
@@ -44,34 +46,42 @@ private extension LoginView {
     
     func setupStyle() {
         
+        self.backgroundColor = .white
         
-        // titleLabel
-        titleLabel = UILabel(frame: CGRect(x: 69, y: 161, width: 236, height: 44))
-        titleLabel.text = "동네라서 가능한 모든것\n당근에서 가까운 이웃과 함께해요."
-        titleLabel.textColor = .black
-        titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 2
-        titleLabel.font = UIFont(name: "Pretendard-Bold", size: 18)
+        titleLabel.do {
+            $0.text = "동네라서 가능한 모든것\n당근에서 가까운 이웃과 함께해요."
+            $0.textColor = .daangnblack
+            $0.textAlignment = .center
+            $0.numberOfLines = 2
+            $0.font = .pretendardBold(size: 18)
+        }
         
-        // idTextField
-        idTextField = UITextField(frame: CGRect(x: 20, y: 276, width: 335, height: 52))
-        idTextField.placeholder = "아이디"
-        idTextField.font = UIFont(name: "Pretendard-SemiBold", size: 14)
-        idTextField.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
+        idTextField.do {
+            $0.placeholder = "아이디"
+        }
         
-        // passwordTextField
-        passwordTextField = UITextField(frame: CGRect(x: 20, y: 335, width: 335, height: 52))
-        passwordTextField.placeholder = "비밀번호"
-        passwordTextField.font = UIFont(name: "Pretendard-SemiBold", size: 14)
-        passwordTextField.backgroundColor = UIColor(red: 221/255, green: 222/255, blue: 227/255, alpha: 1)
+        passwordTextField.do {
+            $0.placeholder = "비밀번호"
+            $0.isSecureTextEntry = true
+        }
         
-        // loginButton
-        loginButton = UIButton(frame: CGRect(x: 21, y: 422, width: 332, height: 58))
-        loginButton.backgroundColor = UIColor(red: 255/255, green: 111/255, blue: 15/255, alpha: 1)
-        loginButton.setTitle("로그인하기", for: .normal)
-        loginButton.setTitleColor(.white, for: .normal)
-        loginButton.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
-        // loginButton.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
+        [idTextField, passwordTextField].forEach() {
+            $0.do {
+                $0.font = .pretendardSemiBold(size: 14)
+                $0.backgroundColor = .daangngrey200
+                $0.layer.cornerRadius = 3
+                $0.clearButtonMode = .whileEditing
+                $0.addPadding(left: 23)
+            }
+        }
+        
+        loginButton.do {
+            $0.backgroundColor = .daangnprimary
+            $0.setTitle("로그인하기", for: .normal)
+            $0.setTitleColor(.daangnwhite, for: .normal)
+            $0.titleLabel?.font = .pretendardBold(size: 18)
+            $0.layer.cornerRadius = 6
+        }
     }
     
     func setupHierarchy() {
@@ -81,7 +91,30 @@ private extension LoginView {
     }
     
     func setupLayout() {
-
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(161)
+            $0.leading.trailing.equalToSuperview().inset(69)
+            $0.height.equalTo(44)
+        }
+        
+        idTextField.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(71)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(52)
+        }
+        
+        passwordTextField.snp.makeConstraints {
+            $0.top.equalTo(idTextField.snp.bottom).offset(7)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(52)
+        }
+        
+        loginButton.snp.makeConstraints {
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(35)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(58)
+        }
     }
     
 }
+
