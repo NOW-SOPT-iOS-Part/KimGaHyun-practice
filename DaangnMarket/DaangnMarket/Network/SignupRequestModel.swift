@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+// 회원가입 요청
+struct SignUpRequestModel: Codable {
+    let authenticationId: String
+    let password: String
+    let nickname: String
+    let phone: String
+}
