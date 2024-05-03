@@ -16,7 +16,7 @@ enum Config {
     
     private static let infoDictionary: [String: Any] = {
         guard let dict = Bundle.main.infoDictionary else {
-            fatalError("ERROR")
+            fatalError("plist cannot found.")
         }
         return dict
     }()
