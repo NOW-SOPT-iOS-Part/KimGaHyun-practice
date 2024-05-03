@@ -13,7 +13,7 @@ import Moya
 
 final class CheckUserInfoView: UIView {
     
-    let logoImageView = UIImageView(image: .imgMymelody)
+    private let logoImageView = UIImageView(image: .imgMymelody)
     let idLabel = UILabel()
     let nickNameLabel = UILabel()
     let phoneNumberLabel = UILabel()
@@ -35,47 +35,41 @@ final class CheckUserInfoView: UIView {
 private extension CheckUserInfoView {
     func setupStyle() {
         self.backgroundColor = .white
-        
-        idLabel.do {
-            $0.font = UIFont(name: "Pretendard-ExtraBold", size: 25)
-            $0.textAlignment = .center
-        }
-        
-        nickNameLabel.do {
-            $0.font = UIFont(name: "Pretendard-ExtraBold", size: 25)
-            $0.textAlignment = .center
-        }
-        
-        phoneNumberLabel.do {
-            $0.font = UIFont(name: "Pretendard-ExtraBold", size: 25)
-            $0.textAlignment = .center
+
+        [idLabel, nickNameLabel, phoneNumberLabel].forEach {
+            $0.do {
+                $0.font = UIFont(name: "Pretendard-ExtraBold", size: 25)
+                $0.textAlignment = .center
+            }
         }
     }
     
     func setupHierarchy() {
-        [logoImageView, idLabel, nickNameLabel, phoneNumberLabel].forEach {
-            self.addSubview($0)
-        }
+        self.addSubviews(logoImageView, idLabel, nickNameLabel, phoneNumberLabel)
     }
     
     func setupLayout() {
         logoImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(87)
-            $0.centerX.equalToSuperview()
             $0.size.equalTo(150)
         }
         
         idLabel.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(58)
-            $0.centerX.equalToSuperview()
         }
+        
         nickNameLabel.snp.makeConstraints {
             $0.top.equalTo(idLabel.snp.bottom).offset(23)
-            $0.centerX.equalToSuperview()
         }
+        
         phoneNumberLabel.snp.makeConstraints {
             $0.top.equalTo(nickNameLabel.snp.bottom).offset(23)
-            $0.centerX.equalToSuperview()
+        }
+        
+        [logoImageView, idLabel, nickNameLabel, phoneNumberLabel].forEach {
+            $0.snp.makeConstraints {
+                $0.centerX.equalToSuperview()
+            }
         }
     }
 }

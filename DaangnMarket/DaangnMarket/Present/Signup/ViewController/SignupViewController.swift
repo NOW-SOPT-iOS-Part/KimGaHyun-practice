@@ -13,15 +13,14 @@ import Moya
 
 final class SignUpViewController: UIViewController {
     
-    private let rootView = SignUpView()
-    
+    private let signUpView = SignUpView()
     
     let userProvider = MoyaProvider<UserTargetType>(
         plugins:  [MoyaLoggingPlugin()]
     )
     
     override func loadView() {
-        self.view = rootView
+        self.view = signUpView
     }
     
     override func viewDidLoad() {
@@ -30,16 +29,19 @@ final class SignUpViewController: UIViewController {
         self.view.backgroundColor = .white
         setTarget()
     }
-    
-    private func setTarget() {
-        rootView.signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
+}
+
+private extension SignUpViewController {
+    func setTarget() {
+        signUpView.signUpButton.addTarget(self, action: #selector(signUpButtonDidTap), for: .touchUpInside)
     }
     
-    @objc private func signUpButtonDidTap() {
-        guard let id = rootView.idTextField.text else { return }
-        guard let password = rootView.passwordTextField.text else { return }
-        guard let nickName = rootView.nickNameTextField.text else { return }
-        guard let phoneNumber = rootView.phoneNumberTextField.text else { return }
+    @objc
+    func signUpButtonDidTap() {
+        guard let id = signUpView.idTextField.text else { return }
+        guard let password = signUpView.passwordTextField.text else { return }
+        guard let nickName = signUpView.nickNameTextField.text else { return }
+        guard let phoneNumber = signUpView.phoneNumberTextField.text else { return }
         
         let request = SignUpRequestModel(
             authenticationId: id,
@@ -68,7 +70,7 @@ final class SignUpViewController: UIViewController {
         }
     }
     
-    private func pushToCheckUserInfoVC() {
+    func pushToCheckUserInfoVC() {
         let checkUserInfoVC = CheckUserInfoViewController()
         self.navigationController?.pushViewController(checkUserInfoVC, animated: true)
     }
