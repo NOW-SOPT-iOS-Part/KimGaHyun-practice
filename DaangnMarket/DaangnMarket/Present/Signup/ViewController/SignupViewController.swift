@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 import Moya
@@ -50,6 +52,7 @@ private extension SignUpViewController {
             phone: phoneNumber
         )
         
+        // SignUp Manager로 서버통신 코드 빼기 - SRP (역할 책임 분리)
         UserService.shared.signUp(request: request) { [weak self] response in
             switch response {
             case .success(let data):
@@ -73,5 +76,16 @@ private extension SignUpViewController {
     func pushToCheckUserInfoVC() {
         let checkUserInfoVC = CheckUserInfoViewController()
         self.navigationController?.pushViewController(checkUserInfoVC, animated: true)
+    }
+    
+    func signupButtonRx() {
+        signUpView.signUpButton.rx.tap
+            .subscribe(onNext: {
+                print("버튼이 눌렸다! ")
+            },onError: {_ in
+                print("에러 발생 ㅋㅋ")
+            },onCompleted: {
+                print("이벤트가 종료되었다! ")
+            }).disposed(by: disposebag)
     }
 }
